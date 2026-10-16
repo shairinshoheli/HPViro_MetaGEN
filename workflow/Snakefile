@@ -1,0 +1,39 @@
+# ============================================================
+# SRA -> paired FASTQ.gz -> FastQC -> fastp -> host removal
+#     -> HPV classification (BLASTN -> TBLASTX -> GenBank check)
+#     -> VIRGO2 abundances/annotation -> VISTA (mgSs / mgCST)
+#
+# Run from the project root (not from workflow/):
+#   snakemake --cores 14 --resources mem_mb=48000 --rerun-incomplete --keep-going
+# Settings live in config/config.yaml.
+# ============================================================
+
+configfile: "config/config.yaml"
+
+include: "rules/common.smk"             # config, sample detection, helpers
+include: "rules/01_fastq_qc.smk"        # SRA -> FASTQ, FastQC, fastp
+include: "rules/02_host_removal.smk"    # GRCh38 index, host read removal
+include: "rules/03_hpv.smk"             # HPV detection, counts, normalisation
+include: "rules/04_virgo2.smk"          # VIRGO2 install, map, compile, taxonomy, annotate
+include: "rules/05_vista.smk"           # VISTA install and run
+
+
+rule all:
+    input:
+        expand(f"{QC_DIR}/{{sample}}_{{read}}_fastqc.html",
+               sample=SAMPLES, read=READS),
+        expand(f"{FASTP_DIR}/{{sample}}.fastp.html", sample=SAMPLES),
+        TRIMMED_FASTQC_TARGETS,
+        expand(f"{HOST_DIR}/{{sample}}_{{read}}.nohost.fastq.gz",
+               sample=SAMPLES, read=READS),
+        expand(f"{BLAST_DIR}/{{sample}}_{{read}}.hpv.blast.tsv.gz",
+               sample=SAMPLES, read=READS),
+        f"{COUNT_DIR}/hpv_fragment_counts.tsv",
+        f"{COUNT_DIR}/hpv_read_fate.tsv",
+        f"{COUNT_DIR}/hpv_fragment_counts_per_million_pairs.tsv",
+        f"{COUNT_DIR}/hpv_genotype_proportions_percent.tsv",
+        NONHOST_NORM_TARGETS,
+        f"{VIRGO2_COMP_DIR}/virgo2_compiled.summary.NR.txt",
+        VIRGO2_TAX_DIR,
+        ANNOTATE_TARGETS,
+        VISTA_DIR,
