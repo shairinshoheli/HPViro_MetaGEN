@@ -1,0 +1,23 @@
+# Data and large files: never commit
+sra/
+reference/
+results/
+logs/
+tmp_fastq/
+*.sra
+*.fastq
+*.fastq.gz
+*.fa
+*.fasta
+*.bt2
+*.tar.gz
+
+# Snakemake / Python
+.snakemake/
+__pycache__/
+*.pyc
+
+# Local settings and secrets
+.env
+*.key
+config/*.local.yaml
