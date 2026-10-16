@@ -1,4 +1,4 @@
-# HPViro 
+# HPViro_MetaGEN
 A complete pipeline for processing shotgun metagenomic data to look at viruses such as HPV and the composition of the vaginal bacteriome
 Snakemake workflow that takes SRA files of paired-end shotgun metagenomes and produces:
 
