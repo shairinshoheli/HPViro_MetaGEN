@@ -1,0 +1,19 @@
+name: hpv-virgo2-vista
+channels:
+  - conda-forge
+  - bioconda
+  - nodefaults
+dependencies:
+  - python >=3.10
+  - snakemake >=8
+  - sra-tools          # fasterq-dump
+  - fastqc
+  - fastp
+  - bowtie2
+  - samtools
+  - blast              # blastn, tblastx, makeblastdb
+  - pigz
+  - git
+  - git-lfs
+  - curl
+  - r-base             # Rscript for VISTA; add the R packages VISTA requires (see its README)
