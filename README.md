@@ -36,7 +36,7 @@ Place these under the project root (paths can be changed in `config/config.yaml`
 
 1. **SRA files**: `sra/SRRxxxxxxx/SRRxxxxxxx.sra`. Every sample found there is processed.
 2. **Human reference**: `reference/GRCh38/GRCh38.primary_assembly.genome.fa` (the bowtie2 index is built by the workflow).
-3. **HPV BLAST database**: `reference/hpvrefs_db/hpv_db.{nhr,nin,nsq}` plus the FASTA it was built from, `hpv_all.fasta` (its sequence names define the count-matrix columns). Build with `makeblastdb -in hpv_all.fasta -dbtype nucl -out reference/hpvrefs_db/hpv_db`; add `-parse_seqids` only if your sequence IDs are compatible.
+3. **HPV BLAST database**: The fasta files were take from the PaVE database by NCBI (https://pave.niaid.nih.gov/) and the database was built: `reference/hpvrefs_db/hpv_db.{nhr,nin,nsq}` plus the FASTA it was built from, `hpv_all.fasta` (its sequence names define the count-matrix columns). Build with `makeblastdb -in hpv_all.fasta -dbtype nucl -out reference/hpvrefs_db/hpv_db`; add `-parse_seqids` only if your sequence IDs are compatible.
 4. **VISTA data** (only if the automatic download fails): download `VISTA_data.tar.gz` in a browser from https://doi.org/10.6084/m9.figshare.28684934.v10 and save it as `reference/VISTA_data.tar.gz`.
 
 VIRGO2 and VISTA are cloned into `reference/` by the workflow. If you installed either by hand, create its flag so it is not re-cloned: `touch reference/VIRGO2.installed reference/VISTA.installed`.
